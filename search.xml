@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo+github搭建个人博客教程</title>
+    <url>/lishoushoua.github.io/2019/10/20/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>记录使用github pages服务搭建个人博客的详细过程以及遇到的各种坑</p>
+<a id="more"></a> 
+
+<h3 id="hexo-github搭建个人博客教程"><a href="#hexo-github搭建个人博客教程" class="headerlink" title="hexo+github搭建个人博客教程"></a>hexo+github搭建个人博客教程</h3><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><h3 id="1-1-准备工作"><a href="#1-1-准备工作" class="headerlink" title="1.1 准备工作"></a>1.1 准备工作</h3><p>环境 ： win10 </p>
+<ul>
+<li><p>注册github账号：<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a></p>
+</li>
+<li><p>下载安装node.js:官网下载<a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a> </p>
+<p> 下载后图形化界面安装，安装成功后运行cmd 输入node -v，显示版本信息即为成功</p>
+<p>下载npm：由于新版的nodejs已经集成了npm，所以之前npm也一并安装好了。同样可以通过输入 <strong>“npm -v”</strong> 来测试是否成功安装</p>
+</li>
+<li><p>下载git,配置好用户名密码邮箱</p>
+<h2 id="2-搭建博客"><a href="#2-搭建博客" class="headerlink" title="2.搭建博客"></a>2.搭建博客</h2><h3 id="2-1github创建仓库"><a href="#2-1github创建仓库" class="headerlink" title="2.1github创建仓库"></a>2.1github创建仓库</h3><p>在github网页新建一个仓库并命名为<strong>你的用户名.github.io</strong>的仓库，注意：</p>
+<ul>
+<li><p>验证注册的邮箱</p>
+</li>
+<li><p>仓库名必须为用户名.github.io</p>
+</li>
+<li><p>仓库创建后需要等待一会</p>
+<h3 id="2-2-配置ssh-key"><a href="#2-2-配置ssh-key" class="headerlink" title="2.2 配置ssh-key"></a>2.2 配置ssh-key</h3><p>首先打开git bush ,执行</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> ~/. <span class="token function">ssh</span> <span class="token comment" spellcheck="true">#检查本机已存在的ssh密钥</span></code></pre>
+<p> 如果提示：No such file or directory 说明你是第一次使用git ：</p>
+<pre class=" language-bash"><code class="language-bash">ssh-keygen -t rsa -C <span class="token string">"邮件地址"</span></code></pre>
+<p> 然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到<code>.ssh\id_rsa.pub</code>文件，记事本打开并复制里面的内容，打开你的github主页，进入setting -&gt; SSH and GPG keys -&gt; New SSH key： </p>
+</li>
+</ul>
+<p>打开命令行或者git bash，输入</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">ssh</span> -T git@github.com <span class="token comment" spellcheck="true"># 注意邮箱地址不用改</span></code></pre>
+<p> 如果提示<code>Are you sure you want to continue connecting (yes/no)?</code>，输入yes，然后会看到： Hi xxx …!</p>
+</li>
+</ul>
+<p>如图，即为配置成功，然后输入</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"liuxianan"</span>// 你的github用户名，非昵称
+$ <span class="token function">git</span> config --global user.email  <span class="token string">"xxx@qq.com"</span>// 填写你的github注册邮箱</code></pre>
+<h2 id="3-配置hexo"><a href="#3-配置hexo" class="headerlink" title="3.配置hexo"></a>3.配置hexo</h2><h3 id="3-1-hexo"><a href="#3-1-hexo" class="headerlink" title="3.1 hexo"></a>3.1 hexo</h3><p>Hexo是一个简单、快速、强大的基于 Github Pages 的博客发布工具，支持Markdown格式，有众多优秀插件和主题。</p>
+<p>官网： <a href="http://hexo.io/" target="_blank" rel="noopener">http://hexo.io</a><br>github: <a href="https://github.com/hexojs/hexo" target="_blank" rel="noopener">https://github.com/hexojs/hexo</a></p>
+<ul>
+<li><p>推荐完全在git bash 执行命令</p>
+</li>
+<li><p>hexo不同版本差别较大，注意区分</p>
+</li>
+<li><p>hexo有两种_config.yml文件 ，一个是根目录下的全局的<code>_config.yml</code>，一个是各个<code>theme</code>下的 </p>
+<h3 id="3-2hexo安装"><a href="#3-2hexo安装" class="headerlink" title="3.2hexo安装"></a>3.2hexo安装</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> -g hexo</code></pre>
+<p>新建hexo文件夹，这个文件夹将作为你存放代码的地方</p>
+<p>切到hexo文件夹打开命令行，运行</p>
+<pre class=" language-bash"><code class="language-bash">$ hexo init</code></pre>
+<p>hexo会自动下载一些文件到这个目录，包括node_modules： </p>
+</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ hexo g <span class="token comment" spellcheck="true"># 生成</span>
+$ hexo s <span class="token comment" spellcheck="true"># 启动服务</span></code></pre>
+<p> 执行以上命令之后，hexo就会在public文件夹生成相关html文件，这些文件将来都是要提交到github去</p>
+<p> <code>hexo s</code>是开启本地预览服务，打开浏览器访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000</a> 即可看到内容 </p>
+<p>如果端口占用，运行以下：</p>
+<ol>
+<li><p>按下<code>Win+R</code>调出命令行窗口，输入<code>netstat -aon|findstr "4000"</code>，找到指定行最后一列的数字（PID）</p>
+</li>
+<li><p>输入<code>tasklist|findstr "PID"</code>，发现是xxx用了4000端口。</p>
+</li>
+<li><p>再次输入<code>taskkill /f /t /im xxx.exe</code>结束该进程。</p>
+<p>第一次初始化的时候hexo已经帮我们写了一篇名为 Hello World 的文章，默认的主题比较丑 </p>
+</li>
+</ol>
+<h3 id="3-3修改主题"><a href="#3-3修改主题" class="headerlink" title="3.3修改主题"></a>3.3修改主题</h3><p>以主题 <a href="https://github.com/esappear/hexo-theme-clover" target="_blank" rel="noopener">https://github.com/esappear/hexo-theme-clover</a> 为例：</p>
+<p>可在 <a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a> 查找更多主题</p>
+<p>推荐主题 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a> </p>
+<p>在博客根目录:</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> clone https://github.com/blleng/hexo-theme-lx themes/lx</code></pre>
+<p>更改站点设置文件<code>_config.yml</code>:</p>
+<pre class=" language-yml"><code class="language-yml">theme: lx</code></pre>
+<p> 然后重新执行<code>hexo g</code>来重新生成。  如果出现一些莫名其妙的问题例如样式崩了，可以先执行<code>hexo clean</code>来清理一下public的内容，然后再来重新生成和发布 </p>
+<h3 id="3-4-上传到github"><a href="#3-4-上传到github" class="headerlink" title="3.4 上传到github"></a>3.4 上传到github</h3><p> 在上传代码到github之前，一定要记得先把你以前所有代码下载下来（虽然github有版本管理，但备份一下总是好的），因为从hexo提交代码时会把你以前的所有代码都删掉。 </p>
+<p>配置好ssh-key后，配置hexo文件夹中的_config.yml:</p>
+<pre class=" language-yml"><code class="language-yml">deploy :
+  type: git
+  repository: git@github.com:lishoushoua/lishoushoua.git
+  branch: master</code></pre>
+<ul>
+<li><p>注意！deploy后要有一个空格，否则hexo d会报错</p>
+<p> 此时直接执行<code>hexo d</code>的话一般会报如下错误： </p>
+</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">Deployer not found: github 或者 Deployer not found: <span class="token function">git</span></code></pre>
+<p>安装一个插件：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git --save</code></pre>
+<ul>
+<li><p>注意！要在git bash 中运行命令， 否则会提示Permission denied (publickey)</p>
+<p>打开你的git bash，输入<code>hexo d</code>就会将本次有改动的代码全部提交，没有改动的不会： </p>
+</li>
+</ul>
+<p>刷新github page页面,即可显示</p>
+<h3 id="3-5常用hexo命令"><a href="#3-5常用hexo命令" class="headerlink" title="3.5常用hexo命令"></a>3.5常用hexo命令</h3><pre class=" language-bash"><code class="language-bash">hexo new <span class="token string">"postName"</span> <span class="token comment" spellcheck="true">#新建文章</span>
+hexo new page <span class="token string">"pageName"</span> <span class="token comment" spellcheck="true">#新建页面</span>
+hexo generate <span class="token comment" spellcheck="true">#生成静态页面至public目录</span>
+hexo server <span class="token comment" spellcheck="true">#开启预览访问端口（默认端口4000，'ctrl + c'关闭server）</span>
+hexo deploy <span class="token comment" spellcheck="true">#部署到GitHub</span>
+hexo <span class="token function">help</span>  <span class="token comment" spellcheck="true"># 查看帮助</span>
+hexo version  <span class="token comment" spellcheck="true">#查看Hexo的版本</span></code></pre>
+<pre class=" language-bash"><code class="language-bash">hexo n <span class="token operator">==</span> hexo new
+hexo g <span class="token operator">==</span> hexo generate
+hexo s <span class="token operator">==</span> hexo server
+hexo d <span class="token operator">==</span> hexo deploy</code></pre>
+<pre class=" language-bash"><code class="language-bash">hexo s -g <span class="token comment" spellcheck="true">#生成并本地预览</span>
+hexo d -g <span class="token comment" spellcheck="true">#生成并上传</span></code></pre>
+<h3 id="3-6-config-yml"><a href="#3-6-config-yml" class="headerlink" title="3.6_config.yml"></a>3.6_config.yml</h3><p>在Hexo中有两个很重要的名为<code>_config.yml</code>的文件，其中一个在站点安装的根目录下，另一个在主题目录下。前者提供了Hexo自身的一些基本配置信息，后者为你所安装的主题的相关配置。为了方便区分，我们把前者称为<strong>站点配置文件</strong>，后者称为<strong>主题配置文件</strong>。</p>
+<p>站点配置文件</p>
+<p>文件路径<code>站点根目录/_config.yml</code><br>这里贴一下个人的部分配置，可以改一下相关内容自行体会一下效果：</p>
+<pre class=" language-yml"><code class="language-yml"># Site
+title: cuteerha
+subtitle: Live well,love lots,and laugh often
+description: 个人学习记录
+keywords:
+author: cuteerha
+language: en
+timezone: Changchun</code></pre>
+<p>“title”：博客的名称。<br>“subtitle”：根据主题的不同，有的会显示有的不会显示。<br>“description”：主要用于SEO，告诉搜索引擎一个关于站点的简单描述，通常建议在其中包含网站的关键词。<br>“author”：作者名称，用于主题显示文章的作者。<br>“language”：语言会对应的解析正在应用的主题中的languages文件夹下的不同语言文件。所以这里的名称要和languages文件夹下的语言文件名称一致。<br>“timezone”：可不填写。</p>
+<pre class=" language-yml"><code class="language-yml"># URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+
+url: https://lishoushoua.github.io/lishoushoua.github.io/
+root: /lishoushoua.github.io/
+permalink: :title/
+permalink_defaults:
+pretty_urls:
+  trailing_index: true # Set to false to remove trailing index.html from permalinks
+</code></pre>
+<p>“url”：一般填写自己的站点链接。<br>“root”：设置根目录的位置。如果你的网站存放在子目录中，例如 <code>http://yoursite.com/blog</code>，则应该将你的 url 设为<code>http://yoursite.com/blog</code> 并把 root 设为 <code>/blog/</code>。<br>“permalink”：生成的链接的格式。带井号的是默认的格式，带有日期感觉怪怪的，改成了自己喜欢的格式。规则也比较简单，标签前面要加英文冒号。<br>“permalink_defaults”: 生成链接中各部分的默认值</p>
+<pre class=" language-yml"><code class="language-yml"># Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:</code></pre>
+<pre class=" language-yml"><code class="language-yml"># Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace:</code></pre>
+<p>书写相关的设置<br>“new_post_name”：新的博文的文件名<br>“default_layout:“ 默认布局<br>“filename_case: 0“ #把文件名称转换为 (1) 小写或 (2) 大写<br>“render_drafts: false“ 是否显示草稿<br>“post_asset_folder: false“ #是否启动资源文件夹<br>“relative_link: false“ #把链接改为与根目录的相对位址<br>“future: true “<br>“highlight:“ #代码块的设置，Hexo自带的代码高亮插件</p>
+<pre class=" language-yml"><code class="language-yml"># Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:</code></pre>
+<p>分类和标签的设置<br>“default_category”：如果撰写文章时没有设置分类，默认的分类选择。<br>“category_map”：用于映射分类的别名。<br>“tag_map”：用法和分类别名是一样的。</p>
+<pre class=" language-yml"><code class="language-yml"># Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: next
+
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy :
+  type: git
+  repository: git@github.com:lishoushoua/lishoushoua.git
+  branch: master</code></pre>
+<p>“theme”：主题拓展，可以在主题商店选择其他主题，这里使用next<br>“deploy”：部署方式</p>
+<h2 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="4.遇到的问题"></a>4.遇到的问题</h2><h3 id="4-1关于hexo安装失败的解决方法"><a href="#4-1关于hexo安装失败的解决方法" class="headerlink" title="4.1关于hexo安装失败的解决方法"></a>4.1关于hexo安装失败的解决方法</h3><p> 可能国内npm源有问题，键入一下代码即可成功安装</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> -g cnpm --registry<span class="token operator">=</span>https://registry.npm.taobao.org
+cnpm <span class="token function">install</span> hexo-cli -g</code></pre>
+<h3 id="4-2出现-‘git’-不是内部或外部命令，也不是可运行的程序"><a href="#4-2出现-‘git’-不是内部或外部命令，也不是可运行的程序" class="headerlink" title="4.2出现\‘git’** 不是内部或外部命令，也不是可运行的程序"></a>4.2出现<strong><em>\</em>‘git’**</strong> 不是内部或外部命令，也不是可运行的程序</h3><p> Windows下配置Git,配置环境变量path</p>
+<ul>
+<li>找到git安装路径中bin的位置，如：D:\Program Files\Git\bin</li>
+<li>找到git安装路径中git-core的位置，如：D:\Program Files\Git\libexec\git-core;</li>
+<li>右键“计算机”-&gt;“属性”-&gt;“高级系统设置”-&gt;“环境变量”-&gt;在下方的“系统变量”中找到“path”-&gt;选中“path”并选择“编辑”-&gt;将找到的bin和git-core路径复制到其中-&gt;保存并退出</li>
+<li>注：“path”中，每个路径之间要以英文输入状态下的分号——“;”作为间隔</li>
+</ul>
+<h3 id="4-3-npm-ERR-Error-EPERM-operation-not-permitted"><a href="#4-3-npm-ERR-Error-EPERM-operation-not-permitted" class="headerlink" title="4.3 npm ERR! Error: EPERM: operation not permitted"></a>4.3 npm ERR! Error: EPERM: operation not permitted</h3><p>权限问题，使用管理员权限打开命令行，也可以对hexo所在文件夹修改相应的用户权限</p>
+<h3 id="4-4-git-push没有权限"><a href="#4-4-git-push没有权限" class="headerlink" title="4.4 git push没有权限"></a>4.4 git push没有权限</h3><pre class=" language-bash"><code class="language-bash">Permission denied <span class="token punctuation">(</span>publickey<span class="token punctuation">)</span>.fatal: Could not <span class="token function">read</span> from remote repository.</code></pre>
+<ol>
+<li><p>先看本地是否有ssh文件</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token operator">></span> <span class="token function">cd</span> ~/.ssh</code></pre>
+</li>
+<li><p>有则把公钥加到github,参见前文配置密钥</p>
+</li>
+<li><p>执行 ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a> 出现如下提示，本地公钥没有问题</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token operator">></span> <span class="token function">ssh</span> -T git@github.com
+Hi lishoushoua<span class="token operator">!</span> You've successfully authenticated, but GitHub does not provide shell access.</code></pre>
+</li>
+</ol>
+<h3 id="4-5nothing-to-commit-working-tree-clean"><a href="#4-5nothing-to-commit-working-tree-clean" class="headerlink" title="4.5nothing to commit, working tree clean"></a>4.5nothing to commit, working tree clean</h3><p>hexo进行提交博客，使用hexo d命令，但需要是使用 hexo-deployer-git 包的，如果没有安装，它检索不到博文，进而提交时，让github发现项目没有发生变化，于是提交失败，弹出这种提示。</p>
+<p>安装 hexo-deployer-git </p>
+<pre class=" language-bash"><code class="language-bash"> <span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git </code></pre>
+<h3 id="4-6-github-page没有样式"><a href="#4-6-github-page没有样式" class="headerlink" title="4.6 github page没有样式"></a>4.6 github page没有样式</h3><p>url地址没有配置正确，修改_config.yml文件的url地址和根目录</p>
+<pre class=" language-bash"><code class="language-bash">url: https://lishoushoua.github.io/lishoushoua.github.io/
+root: /lishoushoua.github.io/</code></pre>
+<p>有可能是hexo缓存的问题，也就是网站根目录的db.json出了问题，建议清除下缓存 清除缓存的方法： 执行命令：hexo clean 然后生成静态博客，在本地预览:</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token variable">$hexo</span> clean
+<span class="token variable">$hexo</span> g
+<span class="token variable">$hexo</span> d</code></pre>
+<h3 id="4-7-github更换next主题后404"><a href="#4-7-github更换next主题后404" class="headerlink" title="4.7 github更换next主题后404"></a>4.7 github更换next主题后404</h3><p> 排除主题和 CNAME 问题，出现 404 ，首先判断是缺少 index.html ，所以肯定就是静态页面文件不全，可以查看.deploy_git 目录下是否有 index.html，运行以下命令解决：</p>
+<pre class=" language-bash"><code class="language-bash"> <span class="token function">npm</span> <span class="token function">install</span> hexo-generator-index --save   </code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+  </entry>
+</search>
